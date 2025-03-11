@@ -227,7 +227,6 @@ function App() {
                         ) : (
                           <FaArrowDown onClick={()=>setIsSetsFromExecShowing({id: exec.id, state: true})}/>
                         )}
-                          <p className="text-xl font-bold">{exec.id}</p>
                           <p>{exec.name}</p>
                           <p>{exec.rest}</p>
                           <FaTrashAlt onClick={()=>{
