@@ -28,7 +28,7 @@ function App() {
   const [execRestTime, setExecRestTime] = useState('')
   const [execSets, setExecSets] = useState('')
   const [trainingIdToExec, setTrainingIdToExec] = useState(0)
-  const [isEditing, setIsEditing] = useState<{state:boolean,id:number} | null>(null)
+  const [isEditing, setIsEditing] = useState<{state:boolean,id:number,execId:number} | null>(null)
   const [newInfo, setNewInfo] = useState<{id:number,info:string}>()
   const [isSetsFromExecShowing, setIsSetsFromExecShowing] = useState<{id:number,state:boolean} | null>(null)
   const [isExecsFromTrainingShowing, setIsExecsFromTrainingShowing] = useState<{id:number,state:boolean} | null>(null)
@@ -115,12 +115,14 @@ function App() {
       return;
     }
   
-    const updatedExecs = execData.map((exec) => ({
-      ...exec, // Copia o objeto exec
-      setsData: exec.setsData.map((set, index) => 
-        index === newInfo?.id ? { ...set, info: newInfo.info } : set
-      ), // Cria um novo array de setsData
-    }));
+    const updatedExecs = execData.map((exec) => (
+      exec.id === isEditing?.execId ? {
+        ...exec,
+        setsData: exec.setsData.map((set, index) => (
+          index === newInfo?.id ? { info: newInfo.info } : set
+        ))
+      } : exec
+    ));
   
     setExecData(updatedExecs);
     setIsEditing(null);
@@ -225,7 +227,7 @@ function App() {
                         ) : (
                           <FaArrowDown onClick={()=>setIsSetsFromExecShowing({id: exec.id, state: true})}/>
                         )}
-                          <p className="text-xl font-bold">{execData.filter((exec) => exec.trainingId === training.id).length}</p>
+                          <p className="text-xl font-bold">{exec.id}</p>
                           <p>{exec.name}</p>
                           <p>{exec.rest}</p>
                           <FaTrashAlt onClick={()=>{
@@ -237,14 +239,14 @@ function App() {
                           <div className="flex flex-col gap-2 w-full">
                             {exec.setsData.map((set , index) => (
                               <form onSubmit={handleSubmitSetInfo} className="flex items-center w-[18.75rem] p-2 gap-8" key={index}>
-                                <MdOutlineSubdirectoryArrowRight />
-                                <input onChange={(e)=>{setNewInfo({id: index,info: e.target.value})}} type="text" placeholder={set.info} disabled={isEditing?.id === index ? !isEditing.state : true}/>
-                                {(isEditing?.id === index ? isEditing.state : false )?(
+                                <p>{'>'}</p>
+                                <input className="p-2 border border-black rounded-md" onChange={(e)=>{setNewInfo({id: index,info: e.target.value})}} type="text" placeholder={set.info} disabled={isEditing?.id === index ? !isEditing.state : true}/>
+                                {(isEditing?.id === index && isEditing.execId === exec.id ? isEditing.state : false )?(
                                   <button type="submit">
-                                    <FaCheck/>
+                                    <p className="underline text-blue-500">Ok</p>
                                   </button>
                                 ):(
-                                  <FaPencilAlt onClick={()=>setIsEditing({state:true , id: index})}/>
+                                  <p className="underline text-blue-500" onClick={()=>setIsEditing({state:true , id: index , execId: exec.id})}>Editar</p>
                                 )}
                                 
                                 
