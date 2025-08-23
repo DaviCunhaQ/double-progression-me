@@ -222,7 +222,7 @@ function App() {
                     execData.filter((exec) => exec.trainingId === training.id).map((exec) => (
                       <div className="flex flex-col gap-2 w-full" key={exec.id}>
                         <div className="flex items-center justify-between w-[18.75rem] p-2 border border-black rounded-md" key={exec.id}>
-                        {isSetsFromExecShowing?.id === training.id && isSetsFromExecShowing.state ? (
+                        {isSetsFromExecShowing?.id === exec.id && isSetsFromExecShowing.state ? (
                           <FaArrowUp onClick={()=>setIsSetsFromExecShowing({id: exec.id, state: false})}/>
                         ) : (
                           <FaArrowDown onClick={()=>setIsSetsFromExecShowing({id: exec.id, state: true})}/>
