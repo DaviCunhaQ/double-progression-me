@@ -137,8 +137,8 @@ function App() {
   function handleSubmitSetInfo(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!newInfo || newInfo.info === "") {
-      toast.error("Preencha o campo!", {
+    if (!newInfo) {
+      toast.error("Selecione uma série para editar", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -475,7 +475,8 @@ function App() {
                                       key={index}
                                     >
                                       <span className="text-gray-500 font-medium">
-                                        <p className="max-sm:hidden">Série</p> {index + 1}
+                                        <p className="max-sm:hidden">Série</p>{" "}
+                                        {index + 1}
                                       </span>
                                       <input
                                         className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 max-sm:max-w-1/2"
@@ -491,7 +492,7 @@ function App() {
                                           isEditing?.id === index &&
                                           isEditing?.execId === exec.id &&
                                           isEditing?.state
-                                            ? newInfo?.info || set.info
+                                            ? newInfo?.info ?? set.info
                                             : set.info
                                         }
                                         disabled={
