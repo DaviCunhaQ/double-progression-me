@@ -471,14 +471,14 @@ function App() {
                                   {exec.setsData.map((set, index) => (
                                     <form
                                       onSubmit={handleSubmitSetInfo}
-                                      className="flex items-center gap-3 p-3 bg-white rounded-lg"
+                                      className="flex items-center gap-3 p-3 bg-white rounded-lg max-w-full max-sm:justify-between"
                                       key={index}
                                     >
                                       <span className="text-gray-500 font-medium">
-                                        Série {index + 1}
+                                        <p className="max-sm:hidden">Série</p> {index + 1}
                                       </span>
                                       <input
-                                        className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                        className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 max-sm:max-w-1/2"
                                         onChange={(e) => {
                                           setNewInfo({
                                             id: index,
